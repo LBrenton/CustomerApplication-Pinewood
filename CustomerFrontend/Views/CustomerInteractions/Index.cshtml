@@ -1,0 +1,101 @@
+﻿@model List<CustomerFrontend.Models.Customer>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<h2>Customers List</h2>
+
+<div class="mt-2 mb-2">
+    @Html.ActionLink("Create New Customer", "Create", null, new { @class = "mb-2" })
+</div>
+
+@using (Html.BeginForm())
+{
+    <div>
+        <label class="form-label">Search by name</label>
+        @Html.TextBox("SearchString", null, new { @class = "form-control mb-1" })
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @if (Request.QueryString["sort"] == "id")
+                {
+                    <span>ID &#9650;</span>
+                }
+                else
+                {
+                    <a href="?sort=id">ID</a>
+                }
+            </th>
+            <th>
+                @if (Request.QueryString["sort"] == "name")
+                {
+                    <span>Name &#9650;</span>
+                }
+                else
+                {
+                    <a href="?sort=name">Name</a>
+                }
+            </th>
+            <th>
+
+                @if (Request.QueryString["sort"] == "email")
+                {
+                    <span>Email &#9650;</span>
+                }
+                else
+                {
+                    <a href="?sort=email">Email</a>
+                }
+            </th>
+            <th>
+
+                @if (Request.QueryString["sort"] == "phone")
+                {
+                    <span>Phone No. &#9650;</span>
+                }
+                else
+                {
+                    <a href="?sort=phone">Phone No.</a>
+                }
+            </th>
+            <th>
+
+                @if (Request.QueryString["sort"] == "date")
+                {
+                    <span>Date added &#9650;</span>
+                }
+                else
+                {
+                    <a href="?sort=date">Date added</a>
+                }
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.CustomerID</td>
+                <td>@customer.CustomerName</td>
+                <td>@customer.CustomerEmail</td>
+                <td>@customer.CustomerPhone</td>
+                <td>@customer.CreatedDate</td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = customer.CustomerID })
+                    | @Html.ActionLink("Edit", "Edit", new { id = customer.CustomerID })
+                    | @Html.ActionLink("Delete", "Delete", new { id = customer.CustomerID })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
